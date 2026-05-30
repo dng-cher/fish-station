@@ -1,3 +1,4 @@
+using System.Globalization;
 using Prometheus;
 using Content.Server._Sunrise.Storyteller.Components;
 using Content.Shared._Sunrise.Storyteller.Prototypes;
@@ -61,7 +62,7 @@ public sealed partial class StorytellerSystem
 
     private static readonly Gauge CrewWeaponCountGauge = Prometheus.Metrics.CreateGauge(
         "ss14_storyteller_crew_weapon_count",
-        "Total number of active guns and high-damage melee weapons held by the crew.");
+        "Total number of unique living crew members carrying at least one active weapon.");
 
     private static readonly Gauge ActiveAntagonistCountGauge = Prometheus.Metrics.CreateGauge(
         "ss14_storyteller_active_antagonist_count",
@@ -90,6 +91,46 @@ public sealed partial class StorytellerSystem
     private static readonly Gauge AvailableGhostRolesGauge = Prometheus.Metrics.CreateGauge(
         "ss14_storyteller_available_ghost_roles",
         "Total number of available ghost roles.");
+
+    // Sunrise edit start - Prometheus gauges for new station metrics
+    private static readonly Gauge AnomaliesCountGauge = Prometheus.Metrics.CreateGauge(
+        "ss14_storyteller_anomalies_count",
+        "Total number of active anomalies.");
+
+    private static readonly Gauge ActiveArtifactsCountGauge = Prometheus.Metrics.CreateGauge(
+        "ss14_storyteller_active_artifacts_count",
+        "Total number of active uncontained artifacts.");
+
+    private static readonly Gauge PuddlesCountGauge = Prometheus.Metrics.CreateGauge(
+        "ss14_storyteller_puddles_count",
+        "Total number of puddles on the station.");
+
+    private static readonly Gauge TrashCountGauge = Prometheus.Metrics.CreateGauge(
+        "ss14_storyteller_trash_count",
+        "Total number of trash items on the station grid.");
+
+    private static readonly Gauge AverageCrewDamageGauge = Prometheus.Metrics.CreateGauge(
+        "ss14_storyteller_average_crew_damage",
+        "Average damage across the living crew members.");
+
+    private static readonly Gauge StationStrengthGauge = Prometheus.Metrics.CreateGauge(
+        "ss14_storyteller_station_strength",
+        "Calculated defensive and technological strength score of the station.");
+
+    // Sunrise edit start - Gauges for individual stress and strength components
+    private static readonly Gauge StressDeadGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_stress_dead", "Stress from dead and ghost players.");
+    private static readonly Gauge StressContainmentGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_stress_containment", "Stress from singularity or tesla containment breach.");
+    private static readonly Gauge StressSecurityGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_stress_security", "Stress from security force deficit.");
+    private static readonly Gauge StressEconomyGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_stress_economy", "Stress from cargo budget deficit.");
+    private static readonly Gauge StressDamageGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_stress_damage", "Stress from average crew damage.");
+    private static readonly Gauge StressAnomalyGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_stress_anomaly", "Stress from active anomalies and uncontained artifacts.");
+    private static readonly Gauge StressMessGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_stress_mess", "Stress from puddles and trash on the station.");
+
+    private static readonly Gauge StrengthArmedCrewGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_strength_armed_crew", "Station strength from peaceful armed crew members.");
+    private static readonly Gauge StrengthSecurityGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_strength_security", "Station strength from security personnel.");
+    private static readonly Gauge StrengthTechnologyGauge = Prometheus.Metrics.CreateGauge("ss14_storyteller_strength_technology", "Station strength from researched technologies.");
+    // Sunrise edit end
+    // Sunrise edit end
 
     private static readonly Counter EventsTriggeredCounter = Prometheus.Metrics.CreateCounter(
         "ss14_storyteller_events_triggered_total",
@@ -127,6 +168,28 @@ public sealed partial class StorytellerSystem
         SupermatterIntegrityGauge.Set(metrics.SupermatterIntegrity);
         UnlockedResearchTiersGauge.Set(metrics.UnlockedResearchTiers);
         AvailableGhostRolesGauge.Set(metrics.AvailableGhostRoles);
+
+        // Sunrise edit start - Update prometheus gauges for new station metrics
+        AnomaliesCountGauge.Set(metrics.AnomaliesCount);
+        ActiveArtifactsCountGauge.Set(metrics.ActiveArtifactsCount);
+        PuddlesCountGauge.Set(metrics.PuddlesCount);
+        TrashCountGauge.Set(metrics.TrashCount);
+        AverageCrewDamageGauge.Set(metrics.AverageCrewDamage);
+        StationStrengthGauge.Set(metrics.StationStrength);
+
+        // Update individual components
+        StressDeadGauge.Set(metrics.StressDead);
+        StressContainmentGauge.Set(metrics.StressContainment);
+        StressSecurityGauge.Set(metrics.StressSecurity);
+        StressEconomyGauge.Set(metrics.StressEconomy);
+        StressDamageGauge.Set(metrics.StressDamage);
+        StressAnomalyGauge.Set(metrics.StressAnomaly);
+        StressMessGauge.Set(metrics.StressMess);
+
+        StrengthArmedCrewGauge.Set(metrics.StrengthArmedCrew);
+        StrengthSecurityGauge.Set(metrics.StrengthSecurity);
+        StrengthTechnologyGauge.Set(metrics.StrengthTechnology);
+        // Sunrise edit end
     }
 
     private void LogStorytellerState(StorytellerRuleComponent comp, StorytellerPacingState? oldState)
@@ -134,8 +197,7 @@ public sealed partial class StorytellerSystem
         if (!_cfg.GetCVar(SunriseCCVars.StorytellerTelemetryEnabled))
             return;
 
-        var json = $"{{\"event\":\"storyteller_state_changed\",\"old_state\":\"{oldState}\",\"new_state\":\"{comp.PacingState}\",\"crew_stress\":{comp.CrewStress:F1},\"threat_budget\":{comp.ThreatBudget:F1}}}";
-        _sawmill.Info(json);
+        _sawmill.Info($"State changed: {oldState} -> {comp.PacingState}. Crew stress: {comp.CrewStress.ToString("F1", CultureInfo.InvariantCulture)}, Threat budget: {comp.ThreatBudget.ToString("F1", CultureInfo.InvariantCulture)}");
     }
 
     private void LogTelemetryTick(StorytellerRuleComponent comp, StationMetrics metrics)
@@ -143,42 +205,18 @@ public sealed partial class StorytellerSystem
         if (!_cfg.GetCVar(SunriseCCVars.StorytellerTelemetryEnabled))
             return;
 
-        var json = $"{{" +
-                   $"\"event\":\"storyteller_tick\"," +
-                   $"\"state\":\"{comp.PacingState}\"," +
-                   $"\"crew_stress\":{comp.CrewStress:F2}," +
-                   $"\"threat_budget\":{comp.ThreatBudget:F2}," +
-                   $"\"metrics\":{{" +
-                   $"\"total_players\":{metrics.TotalPlayers}," +
-                   $"\"alive\":{metrics.AliveCount}," +
-                   $"\"dead\":{metrics.DeadCount}," +
-                   $"\"ghosts\":{metrics.GhostCount}," +
-                   $"\"security\":{metrics.SecurityCount}," +
-                   $"\"cargo_balance\":{metrics.CargoBalance}," +
-                   $"\"science_points\":{metrics.SciencePoints}," +
-                   $"\"atmos_breach_ratio\":{metrics.AtmosphereBreachRatio:F4}," +
-                   $"\"dangerous_gases\":{(metrics.HasDangerousGases ? "true" : "false")}," +
-                   $"\"power_deficit_ratio\":{metrics.PowerGridDeficitRatio:F4}," +
-                   $"\"crew_weapon_count\":{metrics.CrewWeaponCount}," +
-                   $"\"active_antagonist_count\":{metrics.ActiveAntagonistCount}," +
-                   $"\"active_ert_count\":{metrics.ActiveErtCount}," +
-                   $"\"singularity_active\":{(metrics.SingularityActive ? "true" : "false")}," +
-                   $"\"singularity_contained\":{(metrics.SingularityContained ? "true" : "false")}," +
-                   $"\"tesla_active\":{(metrics.TeslaActive ? "true" : "false")}," +
-                   $"\"tesla_contained\":{(metrics.TeslaContained ? "true" : "false")}," +
-                   $"\"supermatter_integrity\":{metrics.SupermatterIntegrity:F2}," +
-                   $"\"unlocked_research_tiers\":{metrics.UnlockedResearchTiers}," +
-                   $"\"player_join_rate\":{metrics.PlayerJoinRate:F2}," +
-                   $"\"player_leave_rate\":{metrics.PlayerLeaveRate:F2}," +
-                   $"\"available_ghost_roles\":{metrics.AvailableGhostRoles}," +
-                   $"\"anomalies\":{metrics.AnomaliesCount}," +
-                   $"\"active_artifacts\":{metrics.ActiveArtifactsCount}," +
-                   $"\"puddles\":{metrics.PuddlesCount}," +
-                   $"\"trash\":{metrics.TrashCount}," +
-                   $"\"average_crew_damage\":{metrics.AverageCrewDamage:F2}" +
-                   $"}}" +
-                   $"}}";
-        _sawmill.Info(json);
+        _sawmill.Info($"Tick - State: {comp.PacingState}, Crew Stress: {comp.CrewStress.ToString("F2", CultureInfo.InvariantCulture)}, Threat Budget: {comp.ThreatBudget.ToString("F2", CultureInfo.InvariantCulture)}, " +
+                      $"Players: {metrics.AliveCount}/{metrics.TotalPlayers} (Dead: {metrics.DeadCount}, Ghosts: {metrics.GhostCount}, Sec: {metrics.SecurityCount}), " +
+                      $"Economy: Cargo Balance {metrics.CargoBalance}, Science Points {metrics.SciencePoints}, " +
+                      $"Atmos: Breach Ratio {metrics.AtmosphereBreachRatio.ToString("F4", CultureInfo.InvariantCulture)}, Dangerous Gases: {metrics.HasDangerousGases}, " +
+                      $"Power Deficit Ratio: {metrics.PowerGridDeficitRatio.ToString("F4", CultureInfo.InvariantCulture)}, " +
+                      $"Weapons: {metrics.CrewWeaponCount}, Antags: {metrics.ActiveAntagonistCount}, ERT: {metrics.ActiveErtCount}, Station Strength: {metrics.StationStrength}, " +
+                      $"Singularity: Active {metrics.SingularityActive}/Contained {metrics.SingularityContained}, " +
+                      $"Tesla: Active {metrics.TeslaActive}/Contained {metrics.TeslaContained}, " +
+                      $"SM Integrity: {metrics.SupermatterIntegrity.ToString("F2", CultureInfo.InvariantCulture)}, " +
+                      $"Research Tiers: {metrics.UnlockedResearchTiers}, Ghost Roles: {metrics.AvailableGhostRoles}, " +
+                      $"Anomalies: {metrics.AnomaliesCount}, Artifacts: {metrics.ActiveArtifactsCount}, " +
+                      $"Puddles: {metrics.PuddlesCount}, Trash: {metrics.TrashCount}, Avg Damage: {metrics.AverageCrewDamage.ToString("F2", CultureInfo.InvariantCulture)}");
     }
 
     private void RecordEventTriggered(string eventId, StorytellerMetadataPrototype metadata)
@@ -188,7 +226,6 @@ public sealed partial class StorytellerSystem
         if (!_cfg.GetCVar(SunriseCCVars.StorytellerTelemetryEnabled))
             return;
 
-        var json = $"{{\"event\":\"storyteller_event_triggered\",\"rule_id\":\"{eventId}\",\"threat_type\":\"{metadata.ThreatType}\",\"cost\":{metadata.ThreatCost:F1},\"stress_reduction\":{metadata.StressReduction:F1}}}";
-        _sawmill.Info(json);
+        Log.Info($"[Storyteller] Triggered event: {eventId} (Threat Type: {metadata.ThreatType}, Cost: {metadata.ThreatCost.ToString("F1", CultureInfo.InvariantCulture)}, Stress Reduction: {metadata.StressReduction.ToString("F1", CultureInfo.InvariantCulture)})");
     }
 }
