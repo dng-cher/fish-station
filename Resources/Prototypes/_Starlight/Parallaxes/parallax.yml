@@ -82,7 +82,7 @@
         configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/planet.png"
+        path: "/NetTextures/Parallaxes/planet.png"
       scale: "1, 1"
       tiled: false
   layersLQ:
@@ -208,7 +208,7 @@
   layersLQUseHQ: true
 
 - type: parallax
-  id: DeltaStation
+  id: DeltaStationAlt
   layers:
     - texture:
         !type:ImageParallaxTextureSource
@@ -272,7 +272,7 @@
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/layer1.png"
+        path: "/NetTextures/Parallaxes/layer1.png"
       slowness: 0.9959
       scale: "1, 1"
     - texture:
