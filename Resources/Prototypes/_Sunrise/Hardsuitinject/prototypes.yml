@@ -229,16 +229,17 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 30
+        maxVol: 20
         reagents:
         - ReagentId: DarkRedRum
-          Quantity: 30
+          Quantity: 20
   - type: SolutionRegeneration
     solution: beaker
+    duration: 180 # Fish-edit
     generated:
       reagents:
       - ReagentId: DarkRedRum
-        Quantity: 0.25
+        Quantity: 20
   - type: Tag
     tags:
     - FitsHardsuit
