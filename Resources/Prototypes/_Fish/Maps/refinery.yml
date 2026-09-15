@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'FSDR'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/_Fish/Shuttles/Evac/emergency_refinery.yml
+          emergencyShuttlePath: /Maps/_Fish/Shuttles/emergency_refinery.yml
         - type: StationJobs
           availableJobs:
             #command
