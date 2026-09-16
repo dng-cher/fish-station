@@ -3,7 +3,7 @@
   mapName: 'Refinery Starport'
   mapPath: /Maps/_Fish/Station/Refinery.yml
   minPlayers: 100
-  maxPlayers: 350
+  maxPlayers: 349 # рубля не хватило
   stations:
     StarlightRefinery:
       stationProto: StandardNanotrasenStation
