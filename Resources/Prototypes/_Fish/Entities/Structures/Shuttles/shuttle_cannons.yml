@@ -1,6 +1,6 @@
 - type: entity
   id: FishShuttleGunBullfrogNoMag
-  parent: [ShuttleGunBase, ConstructibleMachine]
+  parent: ShuttleGunBase
   name: EXP-3600g "Bullfrog"
   description: A powerful 40mm stationary automatic grenade launcher. A cartridge is required for use.
   suffix: Autocharge, Debug
@@ -64,7 +64,7 @@
 
 - type: entity
   id: FishShuttleGunLongbowNoMag
-  parent: [ShuttleGunBase, ConstructibleMachine]
+  parent: ShuttleGunBase
   name: BAL-15 "Longbow"
   description: A powerful stationary heavy autocanon. A cartridge is required for use.
   suffix: Autocharge, Debug
@@ -126,7 +126,7 @@
 
 - type: entity
   id: FishShuttleGunVympelNoMag
-  parent: [ShuttleGunBase, ConstructibleMachine]
+  parent: ShuttleGunBase
   name: BAL-15-2 "Vympel"
   description: A powerful stationary twin heavy autocanon. A cartridge is required for use.
   suffix: Autocharge, Debug
@@ -202,7 +202,7 @@
 
 - type: entity
   id: FishShuttleGunQuadlingNoMag
-  parent: [ShuttleGunBase, ConstructibleMachine]
+  parent: ShuttleGunBase
   name: BAL-15-4 "Quadling"
   description: THE POWER OF ELEVE... ahem, four barrels. Stationary quad heavy autocanon.
   suffix: Autocharge, Debug
@@ -278,7 +278,7 @@
 
 - type: entity
   id: FishShuttleGunSquallNoMag
-  parent: [ShuttleGunBase, ConstructibleMachine]
+  parent: ShuttleGunBase
   name: BAL-308 "Squall"
   description: A powerful stationary minigun. A cartridge is required for use.
   suffix: Autocharge, Debug
@@ -353,7 +353,7 @@
 
 - type: entity
   id: FishShuttleGunTeslaOrionNoMag
-  parent: [ ShuttleGunBase, ConstructibleMachine]
+  parent: ShuttleGunBase
   name: TSL-200c "Orion"
   description: Hi-tech stationary energy unit based on the principle of an experimental Tesla engine.. Effective against electronics. Uses the power cage to fire tesla or ion bolt.
   suffix: Autocharge, Debug
@@ -421,7 +421,7 @@
 
 - type: entity
   id: FishShuttleGunTeslaHyperionNoMag
-  parent: [ ShuttleGunBase, ConstructibleMachine]
+  parent: ShuttleGunBase
   name: TSL-300c "Hyperion"
   description: Hi-tech stationary energy unit based on the principle of an experimental Tesla engine.. Effective against electronics. Uses the power cage to fire tesla or ion bolt.
   suffix: Autocharge, Debug
