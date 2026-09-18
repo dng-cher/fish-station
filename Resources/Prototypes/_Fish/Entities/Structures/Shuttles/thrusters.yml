@@ -1,8 +1,7 @@
 - type: entity
   id: FishGyroscope01K
   parent: Gyroscope
-  suffix: 100
-  categories: [ DEBUG ]
+  suffix: 100, Debug
   components:
   - type: Thruster
     thrust: 100
@@ -10,8 +9,7 @@
 - type: entity
   id: FishGyroscope05K
   parent: Gyroscope
-  suffix: 500
-  categories: [ DEBUG ]
+  suffix: 500, Debug
   components:
   - type: Thruster
     thrust: 500
@@ -19,8 +17,7 @@
 - type: entity
   id: FishGyroscope1K
   parent: Gyroscope
-  suffix: 1000
-  categories: [ DEBUG ]
+  suffix: 1000, Debug
   components:
   - type: Thruster
     thrust: 1000
@@ -28,8 +25,7 @@
 - type: entity
   id: FishGyroscope5K
   parent: Gyroscope
-  suffix: 5000
-  categories: [ DEBUG ]
+  suffix: 5000, Debug
   components:
   - type: Thruster
     thrust: 5000
@@ -37,8 +33,7 @@
 - type: entity
   id: FishGyroscope10K
   parent: Gyroscope
-  suffix: 10000
-  categories: [ DEBUG ]
+  suffix: 10000, Debug
   components:
   - type: Thruster
     thrust: 10000
@@ -46,8 +41,7 @@
 - type: entity
   id: FishGyroscope20K
   parent: Gyroscope
-  suffix: 20000
-  categories: [ DEBUG ]
+  suffix: 20000, Debug
   components:
   - type: Thruster
     thrust: 20000
@@ -55,8 +49,7 @@
 - type: entity
   id: FishGyroscope50K
   parent: Gyroscope
-  suffix: 50000
-  categories: [ DEBUG ]
+  suffix: 50000, Debug
   components:
   - type: Thruster
     thrust: 50000
@@ -64,8 +57,7 @@
 - type: entity
   id: FishGyroscope100K
   parent: Gyroscope
-  suffix: 100000
-  categories: [ DEBUG ]
+  suffix: 100000, Debug
   components:
   - type: Thruster
     thrust: 100000
@@ -73,8 +65,7 @@
 - type: entity
   id: FishGyroscope200K
   parent: Gyroscope
-  suffix: 200000
-  categories: [ DEBUG ]
+  suffix: 200000, Debug
   components:
   - type: Thruster
     thrust: 200000
