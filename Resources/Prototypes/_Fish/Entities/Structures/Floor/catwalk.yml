@@ -1,5 +1,5 @@
 - type: entity
-  id: FloorHardCatwalkIron
+  id: FishFloorHardCatwalkIron
   name:  hard catwalk iron
   description: A catwalk for easier EVA maneuvering and cable placement.
   placement:
@@ -51,8 +51,8 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  id: FloorHardCatwalkWhiteIron
-  parent: FloorHardCatwalkIron
+  id: FishFloorHardCatwalkWhiteIron
+  parent: FishFloorHardCatwalkIron
   name: hard catwalk white iron
   components:
   - type: Sprite
@@ -61,8 +61,8 @@
     state: hardwhiteiron
 
 - type: entity
-  id: FloorHardCatwalkDarkIron
-  parent: FloorHardCatwalkIron
+  id: FishFloorHardCatwalkDarkIron
+  parent: FishFloorHardCatwalkIron
   name: hard catwalk dark iron
   components:
   - type: Sprite
@@ -71,8 +71,8 @@
     state: harddarkiron
 
 - type: entity
-  id: FloorHardCatwalkSmothIron
-  parent: FloorHardCatwalkIron
+  id: FishFloorHardCatwalkSmothIron
+  parent: FishFloorHardCatwalkIron
   name: hard catwalk smooth iron
   components:
   - type: Sprite
@@ -81,8 +81,8 @@
     state: hardsmoothiron
 
 - type: entity
-  id: FloorHardCatwalkFlatwhite
-  parent: FloorHardCatwalkIron
+  id: FishFloorHardCatwalkFlatwhite
+  parent: FishFloorHardCatwalkIron
   name: hard catwalk flat white
   components:
   - type: Sprite
@@ -91,8 +91,8 @@
     state: hardflatwhite
 
 - type: entity
-  id: FloorHardCatwalkMaint
-  parent: FloorHardCatwalkIron
+  id: FishFloorHardCatwalkMaint
+  parent: FishFloorHardCatwalkIron
   name: hard catwalk maint
   components:
   - type: Sprite
@@ -101,8 +101,8 @@
     state: hardmaint
 
 - type: entity
-  id: FloorHardCatwalkTitanium
-  parent: FloorHardCatwalkIron
+  id: FishFloorHardCatwalkTitanium
+  parent: FishFloorHardCatwalkIron
   name: hard catwalk titanium
   components:
   - type: Sprite
