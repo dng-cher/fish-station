@@ -23,9 +23,6 @@
   - type: Tag
     tags:
       - Catwalk
-  - type: Construction
-    graph: Catwalk
-    node: Catwalk
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
