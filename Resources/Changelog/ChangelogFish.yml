@@ -788,10 +788,24 @@
     message: Костюм клоуна для ивента.
   id: 78
   url: https://github.com/makura-games/fish-station/pull/484
+- author: dan4ikk3
+  time: '2026-10-06T12:23:13.0000000+00:00'
+  changes:
+  - type: Fix
+    message: Исправлена возможность стрелять из своего оружия находясь в мехе
+  id: 79
+  url: https://github.com/makura-games/fish-station/pull/485
+- author: Kaiten
+  time: '2026-10-06T21:46:32.0000000+00:00'
+  changes:
+  - type: Fix
+    message: Не смотря на великую лень Феликса скинуть адекватно спрайты, был подготовлен и вырезан спрайт для иконок костюма джагаклоуна для ивента.
+  id: 80
+  url: https://github.com/makura-games/fish-station/pull/487
 - author: dnghcer
   time: '2026-10-07T09:40:00.0000000+00:00'
   changes:
   - type: Add
     message: Новые 7 видов catwalk 
-  id: 79
+  id: 80
   url: https://github.com/makura-games/fish-station/pull/483
